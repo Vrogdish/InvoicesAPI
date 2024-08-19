@@ -86,6 +86,14 @@ public class ProductController {
                     content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class))
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "fields requires",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Error.class)
+                    )
             )
     })
     @PostMapping
@@ -112,7 +120,16 @@ public class ProductController {
                             )
                     }
 
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "fields requires",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Error.class)
+                    )
             )
+
     })
     @PutMapping("/{id}")
     public Product updateProduct(
@@ -128,6 +145,17 @@ public class ProductController {
             @ApiResponse(
                     responseCode = "200",
                     description = "Product deleted"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Product with specified id not found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = Error.class)
+                            )
+                    }
+
             )
     })
     @DeleteMapping("/{id}")

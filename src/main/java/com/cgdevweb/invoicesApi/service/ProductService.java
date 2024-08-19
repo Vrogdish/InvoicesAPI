@@ -2,8 +2,6 @@ package com.cgdevweb.invoicesApi.service;
 
 import com.cgdevweb.invoicesApi.ProductExample;
 import com.cgdevweb.invoicesApi.models.Product;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,7 +10,6 @@ import java.util.List;
 
 @Service
 public class ProductService {
-    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
     private final List<Product> products = new ArrayList<>(ProductExample.ALL);
 
 
@@ -37,9 +34,8 @@ public class ProductService {
     }
 
     public Product updateProduct(String id, Product updatedProduct) {
-        Product existingProduct = getProductById(id); // On vérifie si le produit existe
+        Product existingProduct = getProductById(id);
 
-        // Remplacement du produit existant par le produit mis à jour
         int index = products.indexOf(existingProduct);
         products.set(index, updatedProduct);
 
