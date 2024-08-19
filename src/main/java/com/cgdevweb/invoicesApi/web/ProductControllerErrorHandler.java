@@ -1,5 +1,7 @@
 package com.cgdevweb.invoicesApi.web;
 
+import com.cgdevweb.invoicesApi.models.Error;
+import com.cgdevweb.invoicesApi.service.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -24,5 +26,11 @@ public class ProductControllerErrorHandler {
 
         });
         return errors;
+    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Error handleProductNotFoundException(ProductNotFoundException ex) {
+        return new Error(ex.getMessage());
     }
 }

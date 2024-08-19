@@ -1,18 +1,21 @@
 package com.cgdevweb.invoicesApi.web;
 
-import com.cgdevweb.invoicesApi.ProductExample;
+
+import com.cgdevweb.invoicesApi.models.Error;
 import com.cgdevweb.invoicesApi.models.Product;
 import com.cgdevweb.invoicesApi.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +36,7 @@ public class ProductController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = Product.class)
+                                    array = @ArraySchema(schema = @Schema(implementation = Product.class))
                             )
                     }
             )
@@ -47,13 +50,24 @@ public class ProductController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Product",
+                    description = "Product retrieved",
                     content = {
                             @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = Product.class)
                             )
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Product with specified id not found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = Error.class)
+                            )
+                    }
+
             )
     })
     @GetMapping("/{id}")
@@ -70,33 +84,43 @@ public class ProductController {
                     responseCode = "200",
                     description = "Product created",
                     content = {
-                            @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = Product.class)
-                            )
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class))
                     }
             )
     })
     @PostMapping
-    public Product createProduct(
-            @RequestBody @Valid Product product) {
-        return product;
+    public Product createProduct(@RequestBody @Valid Product product) {
+        return productService.createProduct(product);
     }
 
-    @Operation(summary = "Update a product")
+    @Operation(summary = "Update a product", description = "Update a product with specified ID")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Product updated"
+                    description = "Product updated",
+                    content = {
+                            @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class))
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Product with specified id not found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = Error.class)
+                            )
+                    }
+
             )
     })
     @PutMapping("/{id}")
-    public void updateProduct(
+    public Product updateProduct(
             @Parameter(description = "ID of the product to update")
             @PathVariable String id,
             @RequestBody @Valid Product product
     ) {
-
+        return productService.updateProduct(id, product);
     }
 
     @Operation(summary = "Delete a product", description = "Delete a product")
@@ -112,6 +136,6 @@ public class ProductController {
             @PathVariable
             String id
     ) {
-
+        productService.deleteProduct(id);
     }
 }

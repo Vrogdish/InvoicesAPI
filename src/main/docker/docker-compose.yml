@@ -10,4 +10,4 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ~/home/cedric/Documents/DB/Invoices:/var/lib/postgresql/data
+      - ./postgresData:/var/lib/postgresql/data
