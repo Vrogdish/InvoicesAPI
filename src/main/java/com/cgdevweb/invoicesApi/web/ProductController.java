@@ -3,6 +3,8 @@ package com.cgdevweb.invoicesApi.web;
 
 import com.cgdevweb.invoicesApi.models.Error;
 import com.cgdevweb.invoicesApi.models.Product;
+import com.cgdevweb.invoicesApi.models.ProductToCreate;
+import com.cgdevweb.invoicesApi.models.ProductToUpdate;
 import com.cgdevweb.invoicesApi.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -73,7 +75,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public Product getProductById(
             @Parameter(description = "ID of the product to be fetched ", required = true)
-            @PathVariable String id
+            @PathVariable long id
     ) {
         return productService.getProductById(id);
     }
@@ -82,10 +84,8 @@ public class ProductController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Product created",
-                    content = {
-                            @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class))
-                    }
+                    description = "Product created"
+
             ),
             @ApiResponse(
                     responseCode = "400",
@@ -97,8 +97,8 @@ public class ProductController {
             )
     })
     @PostMapping
-    public Product createProduct(@RequestBody @Valid Product product) {
-        return productService.createProduct(product);
+    public void createProduct(@RequestBody @Valid ProductToCreate product) {
+        productService.createProduct(product);
     }
 
     @Operation(summary = "Update a product", description = "Update a product with specified ID")
@@ -134,10 +134,10 @@ public class ProductController {
     @PutMapping("/{id}")
     public Product updateProduct(
             @Parameter(description = "ID of the product to update")
-            @PathVariable String id,
-            @RequestBody @Valid Product product
+            @PathVariable long id,
+            @RequestBody @Valid ProductToUpdate productUpdate
     ) {
-        return productService.updateProduct(id, product);
+        return productService.updateProduct(id, productUpdate);
     }
 
     @Operation(summary = "Delete a product", description = "Delete a product")
@@ -162,7 +162,7 @@ public class ProductController {
     public void deleteProduct(
             @Parameter(description = "ID of the product to delete")
             @PathVariable
-            String id
+            long id
     ) {
         productService.deleteProduct(id);
     }
