@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+  db:
+    image: mysql:8.0 # Version explicite pour éviter d'utiliser la dernière par défaut
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example # Ne pas utiliser en production !
+      MYSQL_USER: my_user          # Crée un utilisateur spécifique
+      MYSQL_PASSWORD: my_password  # Mot de passe pour cet utilisateur
+    ports:
+      - "3307:3306" # Redirige le port 3306 du conteneur vers le port 3306 de l'hôte
+    volumes:
+      - db_data:/var/lib/mysql # Volume persistant pour les données
+
+
+volumes:
+  db_data:
