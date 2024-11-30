@@ -1,10 +1,12 @@
-package com.Invoices.myApi.security;
+package com.Invoices.myApi.models;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.Invoices.myApi.entities.UserEntity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.Invoices.myApi.security;
+package com.Invoices.myApi.entities;
 
 import java.util.HashSet;
 import java.util.Set;

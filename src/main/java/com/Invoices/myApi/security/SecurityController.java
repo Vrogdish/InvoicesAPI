@@ -19,10 +19,12 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Invoices.myApi.models.CustomUserDetail;
 import com.Invoices.myApi.models.LoginRequest;
 import com.Invoices.myApi.models.LoginResponse;
 import com.Invoices.myApi.models.RegisterRequest;
 import com.Invoices.myApi.models.RegisterResponse;
+import com.Invoices.myApi.services.CustomUserDetailService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
