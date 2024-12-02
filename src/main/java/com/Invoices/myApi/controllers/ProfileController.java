@@ -55,7 +55,7 @@ public class ProfileController {
     @ApiResponse(responseCode = "500", description = "Internal server error", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = String.class)) })
     @PostMapping("/")
-    public ResponseEntity<Profile> createProduct(@RequestBody @Valid ProfileCreate profile) {
+    public ResponseEntity<Profile> createProfile(@RequestBody @Valid ProfileCreate profile) {
         Profile createdProfile = profileService.createProfile(profile);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProfile);
     }
@@ -72,7 +72,7 @@ public class ProfileController {
     @ApiResponse(responseCode = "500", description = "Internal server error", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = String.class)) })
     @PutMapping("/")
-    public ResponseEntity<Profile> updateProduct(@RequestBody @Valid ProfileCreate profile) {
+    public ResponseEntity<Profile> updateProfile(@RequestBody @Valid ProfileCreate profile) {
         Profile updatedProfile = profileService.updateProfile(profile);
         return ResponseEntity.ok(updatedProfile);
     }

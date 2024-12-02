@@ -99,7 +99,7 @@ public class ProductsService {
             throw new RessourceNotFoundException("Product with id" + id + " not found");
         } else {
             productRepository.delete(productEntity);
-            return "Product deleted";
+            return "Product with id " + id + " deleted";
         }
     }
 
